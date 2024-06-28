@@ -11,6 +11,18 @@ const fetchUsers = async (req, res) => {
     }
 };
 
+const getCurrentUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id, { password: 0, __v: 0 });
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        res.json({ data: user });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const fetchUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -87,8 +99,8 @@ const logInUser = async (req, res) => {
 
 const logOutUser = (req, res) => {
     const user = req.body;
-    console.log("logging out", user);
-    res.clearCookie("token", {
+    console.info("logging out", user);
+    res.clearCookie("authToken", {
         maxAge: 0,
         sameSite: "none",
         secure: true,
@@ -102,5 +114,6 @@ module.exports = {
     updateUser,
     deleteUser,
     logInUser,
+    getCurrentUser,
     logOutUser,
 };
