@@ -19,20 +19,21 @@ function connectSocketIO(app) {
 
         socket.on("joinDocument", (data) => {
             console.info("...joinDocument...", data);
-            socket.join(`${data.projectId}-${data.documentId}`);
+            socket.join(`document-${data.documentId}`);
         });
 
         socket.on("leaveDocument", (data) => {
             console.info("...leaveDocument...", data);
-            socket.leave(`${data.projectId}-${data.documentId}`);
+            socket.leave(`document-${data.documentId}`);
         });
 
         socket.on("newFeedback", (data) => {
             console.info("...newFeedback...", data);
-            io.to(`${data.projectId}-${data.documentId}`).emit(
-                "feedbackReceived",
-                data
-            );
+            socket.broadcast.emit("feedbackReceived", data);
+        });
+
+        socket.on("sendMessage", (message) => {
+            io.emit("receiveMessage", message);
         });
 
         socket.on("disconnect", () => {
