@@ -14,6 +14,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+    res.send("teamwork-hub-server is running...");
+});
+
 app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
 app.use("/api/documents", documentsRouter);
