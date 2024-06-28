@@ -6,8 +6,8 @@ function connectDB() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        .then(() => console.log("MongoDB connected"))
-        .catch((err) => console.log(err));
+        .then(() => console.info("MongoDB connected"))
+        .catch((err) => console.error(err));
 }
 
 module.exports = connectDB;
