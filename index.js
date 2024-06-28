@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectSocketIO = require("./socket");
 const projectRoutes = require("./routes/projects");
 const feedbacksRouter = require("./routes/feedbacks");
+const documentsRouter = require("./routes/documents");
 const connectDB = require("./utils/connectDB");
 
 connectDB();
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
+app.use("/api/documents", documentsRouter);
 
 const server = connectSocketIO(app);
 
