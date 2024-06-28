@@ -64,6 +64,7 @@ const deleteUser = async (req, res) => {
 const logInUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
         const user = await User.findOne({ email });
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: "Invalid credentials" });
@@ -72,16 +73,26 @@ const logInUser = async (req, res) => {
         const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
             expiresIn: "1h",
         });
-        res.cookie("authToken", token, { httpOnly: true, secure: false });
-        res.json({ data: user });
+
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        });
+        res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 const logOutUser = (req, res) => {
-    res.clearCookie("authToken");
-    res.json({ message: "Logged out successfully" });
+    const user = req.body;
+    console.log("logging out", user);
+    res.clearCookie("token", {
+        maxAge: 0,
+        sameSite: "none",
+        secure: true,
+    }).send({ success: true });
 };
 
 module.exports = {
