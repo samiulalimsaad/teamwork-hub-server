@@ -21,11 +21,11 @@ const getProjectById = async (req, res) => {
 };
 
 const createProject = async (req, res) => {
-    const { name, description, createdBy } = req.body;
+    const { title, description, createdBy } = req.body;
     const newProject = new Project({
-        name,
+        title,
         description,
-        createdBy,
+        createdBy: req.user.id,
     });
     try {
         const savedProject = await newProject.save();

@@ -2,7 +2,10 @@ const Feedback = require("../models/feedback.model");
 
 const getFeedbacks = async (req, res) => {
     try {
-        const feedbacks = await Feedback.find();
+        const documentId = req.query.documentId;
+        const feedbacks = await Feedback.find({
+            document: documentId,
+        }).populate("createdBy");
         res.json(feedbacks);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -24,7 +27,7 @@ const createFeedback = async (req, res) => {
     const { content, createdBy, document } = req.body;
     const newFeedback = new Feedback({
         content,
-        createdBy,
+        createdBy: req.user.id,
         document,
     });
     try {

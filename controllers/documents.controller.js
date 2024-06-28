@@ -1,8 +1,10 @@
 const Document = require("../models/document.model");
+const Project = require("../models/project.model");
 
 const getDocuments = async (req, res) => {
     try {
-        const documents = await Document.find();
+        const projectId = req.query.projectId;
+        const documents = await Document.find({ project: projectId });
         res.json(documents);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -21,11 +23,11 @@ const getDocumentById = async (req, res) => {
 };
 
 const createDocument = async (req, res) => {
-    const { title, content, createdBy, project } = req.body;
+    const { title, content, project } = req.body;
     const newDocument = new Document({
         title,
         content,
-        createdBy,
+        createdBy: req.user.id,
         project,
     });
     try {
