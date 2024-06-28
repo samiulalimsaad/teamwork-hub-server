@@ -14,14 +14,20 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: ["http://localhost:5173"],
+        credentials: true,
+        optionSuccessStatus: 200,
+    })
+);
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
     res.send("teamwork-hub-server is running...");
 });
 
-app.use("/api/projects", userRouters);
+app.use("/api/users", userRouters);
 app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
 app.use("/api/documents", documentsRouter);
