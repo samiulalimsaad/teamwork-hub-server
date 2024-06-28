@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const projectRoutes = require("./routes/projects");
 const connectSocketIO = require("./socket");
+const feedbacksRouter = require("./routes/feedbacks");
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,7 @@ mongoose
 const PORT = process.env.PORT || 5000;
 
 app.use("/api/projects", projectRoutes);
+app.use("/api/feedbacks", feedbacksRouter);
 
 const server = connectSocketIO(app);
 
