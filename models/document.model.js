@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const documentSchema = new mongoose.Schema(
     {
-        title: { type: String, required: true },
-        content: { type: String, required: true },
+        title: { type: String, required: true, default: "untitled" },
+        content: { type: String, required: true, default: "" },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
@@ -13,6 +13,10 @@ const documentSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Project",
             required: true,
+        },
+        feedbacks: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Feedback",
         },
     },
     { timestamps: true }

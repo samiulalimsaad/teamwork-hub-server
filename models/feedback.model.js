@@ -8,9 +8,9 @@ const feedbackSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
-        project: {
+        document: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Project",
+            ref: "Document",
             required: true,
         },
     },
