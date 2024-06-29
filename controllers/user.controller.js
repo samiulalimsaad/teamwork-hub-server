@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const fetchUsers = async (req, res) => {
     try {
         const users = await User.find();
-        res.json({ data: users });
+        res.json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -17,7 +17,7 @@ const getCurrentUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json({ data: user });
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -29,7 +29,7 @@ const fetchUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json({ data: user });
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -39,7 +39,7 @@ const createUser = async (req, res) => {
     try {
         const newUser = new User(req.body);
         const savedUser = await newUser.save();
-        res.status(201).json({ data: savedUser });
+        res.status(201).json({ success: true });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -55,7 +55,7 @@ const updateUser = async (req, res) => {
         if (!updatedUser) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json({ data: updatedUser });
+        res.json(updatedUser);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -67,7 +67,7 @@ const deleteUser = async (req, res) => {
         if (!deletedUser) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.status(204).send();
+        res.status(204).send(true);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
