@@ -3,7 +3,11 @@ const socketIo = require("socket.io");
 
 function connectSocketIO(app) {
     const server = http.createServer(app);
-    const io = socketIo(server);
+    const io = socketIo(server, {
+        cors: {
+            origin: "*",
+        },
+    });
     io.on("connection", (socket) => {
         console.info("New client connected");
 
