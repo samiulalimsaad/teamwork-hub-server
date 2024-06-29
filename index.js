@@ -20,7 +20,10 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
     cors({
-        origin: ["http://localhost:5173"],
+        origin: [
+            "http://localhost:5173",
+            "https://teamwork-hub-client.vercel.app",
+        ],
         credentials: true,
         optionSuccessStatus: 200,
     })
