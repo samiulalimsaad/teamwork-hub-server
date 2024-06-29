@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const authMiddleware = require("./middleware/authMiddleware");
 const { getCurrentUser } = require("./controllers/user.controller");
+const chatRouter = require("./routes/chat.route");
 
 connectDB();
 const PORT = process.env.PORT || 5000;
@@ -37,7 +38,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouters);
 app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
-app.use("/api/chats", feedbacksRouter);
+app.use("/api/chats", chatRouter);
 app.use("/api/documents", documentsRouter);
 app.get("/api/currentUser", authMiddleware, getCurrentUser);
 
