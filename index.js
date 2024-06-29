@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouters);
 app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
+app.use("/api/chats", feedbacksRouter);
 app.use("/api/documents", documentsRouter);
 app.get("/api/currentUser", authMiddleware, getCurrentUser);
 

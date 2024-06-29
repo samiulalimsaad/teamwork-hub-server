@@ -38,9 +38,9 @@ function connectSocketIO(app) {
             console.info("...newFeedback...", data);
             socket.broadcast.emit("feedbackReceived", data);
         });
-
-        socket.on("sendMessage", (message) => {
-            io.emit("receiveMessage", message);
+        socket.on("newMessage", (data) => {
+            console.info("...newMessage...", data);
+            socket.broadcast.emit("messageReceived", data);
         });
 
         socket.on("disconnect", () => {
