@@ -23,6 +23,10 @@ function connectSocketIO(app) {
             console.info("...editDocument...", data);
             socket.broadcast.emit("documentEdited", data);
         });
+        socket.on("selection-change", (data) => {
+            console.info("...selection-change...", data);
+            socket.broadcast.emit("cursor-move", data);
+        });
 
         socket.on("joinDocument", (data) => {
             console.info("...joinDocument...", data);
