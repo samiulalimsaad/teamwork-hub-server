@@ -5,7 +5,7 @@ function connectSocketIO(app) {
     const server = http.createServer(app);
     const io = socketIo(server, {
         cors: {
-            origin: "*",
+            origin: ["http://localhost:5173"],
             methods: ["GET", "POST"],
             allowedHeaders: ["*"],
             credentials: true,
