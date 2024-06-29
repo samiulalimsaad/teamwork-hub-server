@@ -7,6 +7,7 @@ function connectSocketIO(app) {
         cors: {
             origin: "*",
             methods: ["GET", "POST"],
+            allowedHeaders: ["*"]
             credentials: true,
             optionSuccessStatus: 200,
         },
