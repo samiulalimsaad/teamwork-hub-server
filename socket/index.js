@@ -8,7 +8,6 @@ function connectSocketIO(app) {
             origin: "*",
             methods: ["GET", "POST"],
             allowedHeaders: ["*"],
-            all
             credentials: true,
             optionSuccessStatus: 200,
         },
