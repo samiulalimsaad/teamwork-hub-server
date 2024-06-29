@@ -7,6 +7,8 @@ function connectSocketIO(app) {
         cors: {
             origin: "*",
             methods: ["GET", "POST"],
+            credentials: true,
+            optionSuccessStatus: 200,
         },
     });
     io.on("connection", (socket) => {
