@@ -5,7 +5,7 @@ const getChats = async (req, res) => {
         const documentId = req.query.documentId;
         const chats = await Chat.find({
             document: documentId,
-        }).populate("createdBy");
+        }).populate("createdBy", "-password");
         res.json(chats);
     } catch (err) {
         res.status(500).json({ message: err.message });

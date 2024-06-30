@@ -5,7 +5,7 @@ const getFeedbacks = async (req, res) => {
         const documentId = req.query.documentId;
         const feedbacks = await Feedback.find({
             document: documentId,
-        }).populate("createdBy");
+        }).populate("createdBy", "-password");
         res.json(feedbacks);
     } catch (err) {
         res.status(500).json({ message: err.message });
