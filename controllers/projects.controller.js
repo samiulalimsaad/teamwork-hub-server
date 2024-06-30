@@ -1,8 +1,16 @@
 const Project = require("../models/project.model");
+const { redisClient } = require("../utils/connectRedis");
 
 const getProjects = async (req, res) => {
     try {
-        const projects = await Project.find().populate("createdBy");
+        const data = await redisClient.get(req.user.email);
+        console.log("from cached", data);
+
+        if (data) return res.json(JSON.parse(data || "{}"));
+        const projects = await Project.find().populate(
+            "createdBy",
+            "-password"
+        );
         res.json(projects);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -31,6 +39,11 @@ const createProject = async (req, res) => {
     });
     try {
         const savedProject = await newProject.save();
+        const projects = await Project.find().populate(
+            "createdBy",
+            "-password"
+        );
+        await redisClient.set(req.user.email, JSON.stringify(projects));
         res.status(201).json(savedProject);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -52,7 +65,12 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
+        const projects = await Project.find().populate(
+            "createdBy",
+            "-password"
+        );
         await Project.findByIdAndDelete(req.params.id);
+        await redisClient.set(req.user.email, JSON.stringify(projects));
         res.json({ message: "Project deleted" });
     } catch (err) {
         res.status(500).json({ message: err.message });

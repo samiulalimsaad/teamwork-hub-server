@@ -1,6 +1,8 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Project = require("../models/project.model");
+const { redisClient } = require("../utils/connectRedis");
 
 const fetchUsers = async (req, res) => {
     try {
@@ -82,6 +84,13 @@ const logInUser = async (req, res) => {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
+        const projects = await Project.find().populate(
+            "createdBy",
+            "-password"
+        );
+
+        await redisClient.set(user.email, JSON.stringify(projects));
+
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
@@ -97,9 +106,12 @@ const logInUser = async (req, res) => {
     }
 };
 
-const logOutUser = (req, res) => {
+const logOutUser = async (req, res) => {
     const user = req.body;
     console.info("logging out", user);
+
+    await redisClient.del(req.user.email);
+
     res.clearCookie("authToken", {
         maxAge: 0,
         sameSite: "none",
