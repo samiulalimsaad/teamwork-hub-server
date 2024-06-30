@@ -32,7 +32,7 @@ app.use(
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-    res.send("teamwork-hub-server is running...");
+    res.status(200).send("teamwork-hub-server is running...");
 });
 
 app.use("/api/users", userRouters);
@@ -45,3 +45,5 @@ app.get("/api/currentUser", authMiddleware, getCurrentUser);
 const server = connectSocketIO(app);
 
 server.listen(PORT, () => console.info(`Server running on port ${PORT}`));
+
+module.exports = server;

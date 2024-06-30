@@ -17,7 +17,7 @@ const getCurrentUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json(user);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -29,7 +29,7 @@ const fetchUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json(user);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -91,7 +91,7 @@ const logInUser = async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         });
-        res.json({ success: true });
+        res.status(200).json({ success: true });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
