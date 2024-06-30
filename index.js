@@ -12,8 +12,12 @@ const morgan = require("morgan");
 const authMiddleware = require("./middleware/authMiddleware");
 const { getCurrentUser } = require("./controllers/user.controller");
 const chatRouter = require("./routes/chat.route");
+const { connectRedis, redisClient } = require("./utils/connectRedis");
+const versionRouter = require("./routes/version.route");
 
 connectDB();
+connectRedis();
+
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -40,7 +44,18 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
 app.use("/api/chats", chatRouter);
 app.use("/api/documents", documentsRouter);
+app.use("/api/documents", versionRouter);
 app.get("/api/currentUser", authMiddleware, getCurrentUser);
+
+app.post("/api/test", async (req, res) => {
+    const data = await redisClient.hSet("key", req.body);
+    return res.json(data);
+});
+
+app.get("/api/test", async (req, res) => {
+    const value = await redisClient.hGetAll("key");
+    return res.json(value);
+});
 
 const server = connectSocketIO(app);
 
