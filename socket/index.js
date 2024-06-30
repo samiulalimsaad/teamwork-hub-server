@@ -21,7 +21,7 @@ function connectSocketIO(app) {
 
         socket.on("editDocument", (data) => {
             console.info("...editDocument...", data);
-            socket.broadcast.emit("documentEdited", data);
+            socket.broadcast.emit(`documentEdited-${data._id}`, data);
         });
         socket.on("selection-change", (data) => {
             console.info("...selection-change...", data);
@@ -30,7 +30,7 @@ function connectSocketIO(app) {
 
         socket.on("joinDocument", (data) => {
             console.info("...joinDocument...", data);
-            socket.join(`document-${data.documentId}`);
+            socket.broadcast.emit(`document-${data.documentId}`, data);
         });
 
         socket.on("leaveDocument", (data) => {
@@ -40,11 +40,11 @@ function connectSocketIO(app) {
 
         socket.on("newFeedback", (data) => {
             console.info("...newFeedback...", data);
-            socket.broadcast.emit("feedbackReceived", data);
+            socket.broadcast.emit(`feedbackReceived-${data._id}`, data);
         });
         socket.on("newMessage", (data) => {
             console.info("...newMessage...", data);
-            socket.broadcast.emit("messageReceived", data);
+            socket.broadcast.emit(`messageReceived-${data._id}`, data);
         });
 
         socket.on("disconnect", () => {
