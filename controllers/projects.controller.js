@@ -2,7 +2,7 @@ const Project = require("../models/project.model");
 
 const getProjects = async (req, res) => {
     try {
-        const projects = await Project.find();
+        const projects = await Project.find().populate("createdBy");
         res.json(projects);
     } catch (err) {
         res.status(500).json({ message: err.message });

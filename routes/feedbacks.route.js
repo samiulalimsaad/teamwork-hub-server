@@ -8,12 +8,12 @@ const {
     deleteFeedback,
 } = require("../controllers/feedbacks.controller");
 
-const router = express.Router();
+const feedbackRouter = express.Router();
 
-router.get("/", authMiddleware, getFeedbacks);
-router.get("/:id", authMiddleware, getFeedbackById);
-router.post("/", authMiddleware, createFeedback);
-router.put("/:id", authMiddleware, updateFeedback);
-router.delete("/:id", authMiddleware, deleteFeedback);
+feedbackRouter.get("/", authMiddleware, getFeedbacks);
+feedbackRouter.get("/:id", authMiddleware, getFeedbackById);
+feedbackRouter.post("/", authMiddleware, createFeedback);
+feedbackRouter.put("/:id", authMiddleware, updateFeedback);
+feedbackRouter.delete("/:id", authMiddleware, deleteFeedback);
 
-module.exports = router;
+module.exports = feedbackRouter;

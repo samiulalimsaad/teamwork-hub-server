@@ -9,12 +9,12 @@ const {
     deleteDocument,
 } = require("../controllers/documents.controller");
 
-const router = express.Router();
+const documentRouter = express.Router();
 
-router.get("/", authMiddleware, getDocuments);
-router.get("/:id", authMiddleware, getDocumentById);
-router.post("/", authMiddleware, createDocument);
-router.put("/:id", authMiddleware, updateDocument);
-router.delete("/:id", authMiddleware, deleteDocument);
+documentRouter.get("/", authMiddleware, getDocuments);
+documentRouter.get("/:id", authMiddleware, getDocumentById);
+documentRouter.post("/", authMiddleware, createDocument);
+documentRouter.put("/:id", authMiddleware, updateDocument);
+documentRouter.delete("/:id", authMiddleware, deleteDocument);
 
-module.exports = router;
+module.exports = documentRouter;
