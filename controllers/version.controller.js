@@ -1,5 +1,6 @@
 const Project = require("../models/project.model");
 const Version = require("../models/version.model");
+const Document = require("../models/document.model");
 
 const getVersions = async (req, res) => {
     try {
@@ -13,7 +14,9 @@ const getVersions = async (req, res) => {
 
 const getVersionById = async (req, res) => {
     try {
-        const version = await version.findById(req.params.id);
+        console.log({ documentId: req.params.id });
+        const version = await Version.find({ documentId: req.params.id });
+        console.log(version);
         if (!version)
             return res.status(404).json({ message: "Version not found" });
         res.json(version);
@@ -23,13 +26,11 @@ const getVersionById = async (req, res) => {
 };
 
 const createVersion = async (req, res) => {
-    const { title, content, project } = req.body;
-    const newVersion = new Version({
-        title,
-        content,
-        createdBy: req.user.id,
-        project,
-    });
+    const { document } = req.body;
+
+    const doc = await Document.findById(document);
+
+    const newVersion = new Version({ document: doc, documentId: doc._id });
     try {
         const savedVersion = await newVersion.save();
         res.status(201).json(savedVersion);

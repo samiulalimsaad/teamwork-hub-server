@@ -44,7 +44,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/feedbacks", feedbacksRouter);
 app.use("/api/chats", chatRouter);
 app.use("/api/documents", documentsRouter);
-app.use("/api/documents", versionRouter);
+app.use("/api/versions", versionRouter);
 app.get("/api/currentUser", authMiddleware, getCurrentUser);
 
 app.post("/api/test", async (req, res) => {
