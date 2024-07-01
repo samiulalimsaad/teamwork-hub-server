@@ -48,6 +48,11 @@ function connectSocketIO(app) {
             socket.broadcast.emit(`messageReceived-${data._id}`, data);
         });
 
+        socket.on("newDocument", (data) => {
+            console.info("...newDocument...", data);
+            socket.broadcast.emit(`newDocument-${data.projectId}`, data);
+        });
+
         socket.on("editorOption", (data) => {
             console.info("...editorOption...", data);
             socket.broadcast.emit(`editorOption-${data._id}`, data);
