@@ -15,7 +15,9 @@ const getVersions = async (req, res) => {
 const getVersionById = async (req, res) => {
     try {
         console.log({ documentId: req.params.id });
-        const version = await Version.find({ documentId: req.params.id });
+        const version = await Version.find({ documentId: req.params.id }).sort({
+            createdAt: -1,
+        });
         console.log(version);
         if (!version)
             return res.status(404).json({ message: "Version not found" });
