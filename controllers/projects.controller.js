@@ -57,6 +57,11 @@ const updateProject = async (req, res) => {
             req.body,
             { new: true }
         );
+        const projects = await Project.find().populate(
+            "createdBy",
+            "-password"
+        );
+        await redisClient.set(req.user.email, JSON.stringify(projects));
         res.json(updatedProject);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -65,11 +70,11 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
+        await Project.findByIdAndDelete(req.params.id);
         const projects = await Project.find().populate(
             "createdBy",
             "-password"
         );
-        await Project.findByIdAndDelete(req.params.id);
         await redisClient.set(req.user.email, JSON.stringify(projects));
         res.json({ message: "Project deleted" });
     } catch (err) {
