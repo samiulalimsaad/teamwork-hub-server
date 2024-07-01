@@ -48,16 +48,6 @@ app.use("/api/documents", documentsRouter);
 app.use("/api/versions", versionRouter);
 app.get("/api/currentUser", authMiddleware, getCurrentUser);
 
-app.post("/api/test", async (req, res) => {
-    const data = await redisClient.hSet("key", req.body);
-    return res.json(data);
-});
-
-app.get("/api/test", async (req, res) => {
-    const value = await redisClient.hGetAll("key");
-    return res.json(value);
-});
-
 const server = connectSocketIO(app);
 
 server.listen(PORT, () => console.info(`Server running on port ${PORT}`));
