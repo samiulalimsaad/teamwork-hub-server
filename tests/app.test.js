@@ -21,7 +21,7 @@ describe("GET /", () => {
 describe("GET /users", () => {
     beforeAll(async () => {
         if (mongoose.connection.readyState === 1) {
-            console.log("Connected to MongoDB for testing");
+            console.info("Connected to MongoDB for testing");
         } else {
             await mongoose.connect("mongodb://localhost:27017/testdb", {
                 useNewUrlParser: true,
@@ -54,7 +54,6 @@ describe("GET /users", () => {
             .send(newTodo)
             .expect("Content-Type", /json/)
             .expect(201);
-        // console.log({ response: response.body });
 
         expect(response.body.success).toBe(true);
     });
@@ -65,7 +64,6 @@ describe("GET /users", () => {
             .send(newTodo)
             .expect("Content-Type", /json/)
             .expect(200);
-        console.log({ response: response.body });
 
         expect(response.body.success).toBe(true);
     });

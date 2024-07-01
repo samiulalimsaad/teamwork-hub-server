@@ -4,7 +4,7 @@ const { redisClient } = require("../utils/connectRedis");
 const getProjects = async (req, res) => {
     try {
         const data = await redisClient.get(req.user.email);
-        console.log("from cached", data);
+        console.info("_________from cached___________");
 
         if (data) return res.json(JSON.parse(data || "{}"));
         const projects = await Project.find().populate(
