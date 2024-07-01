@@ -24,6 +24,21 @@ const documentSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+documentSchema.pre("save", async function (next) {
+    try {
+        // Only run this hook if the document is new
+        if (this.isNew) {
+            const Project = mongoose.model("Project");
+            await Project.findByIdAndUpdate(this.project, {
+                $push: { documents: this._id },
+            });
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const Document = mongoose.model("Document", documentSchema);
 
 module.exports = Document;

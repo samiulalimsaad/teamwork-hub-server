@@ -17,6 +17,20 @@ const feedbackSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+feedbackSchema.pre("save", async function (next) {
+    try {
+        if (this.isNew) {
+            const Document = mongoose.model("Document");
+            await Document.findByIdAndUpdate(this.document, {
+                $push: { feedbacks: this._id },
+            });
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 
 module.exports = Feedback;
