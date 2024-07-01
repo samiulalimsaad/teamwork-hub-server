@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const documentSchema = new mongoose.Schema(
     {
         title: { type: String, required: true, default: "untitled" },
+        language: { type: String, required: true, default: "javascript" },
+        theme: { type: String, required: true, default: "light" },
         content: { type: String, required: true, default: "" },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
