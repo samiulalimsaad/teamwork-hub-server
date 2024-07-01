@@ -125,10 +125,6 @@ The backend server will be running at `http://localhost:5000`.
 ### Current User Routes
 
 - `GET /api/current-user` - Fetch current user
-- `GET /api/current-user/:id` - Fetch current user by ID
-- `POST /api/current-user` - Create current user
-- `PUT /api/current-user/:id` - Update current user
-- `DELETE /api/current-user/:id` - Delete current user
 
 ## Real-Time Collaboration
 
@@ -136,11 +132,11 @@ Real-time document editing and discussions are enabled using Socket.io.
 
 ## Docker and Docker Compose
 
-To simplify the setup process, you can use Docker and Docker Compose to containerize the application and its dependencies.
+To simplify the setup process, use Docker and Docker Compose to containerize the application and its dependencies.
 
 ### Docker
 
-Ensure you have Docker installed on your machine. You can build and run the Docker image using the following commands:
+Ensure Docker already installed on the machine. Build and run the Docker image using the following commands:
 
 1. Build the Docker image:
 
@@ -191,8 +187,6 @@ To start the application with Docker Compose, use the following command:
 docker-compose up --build
 ```
 
-Got it! Here's an updated section focusing on unit testing:
-
 ## Testing
 
 To ensure the reliability and maintainability of the application, comprehensive unit tests are provided using Jest, a popular testing framework for Node.js applications.
@@ -213,11 +207,15 @@ yarn test
 
 ### Unit Testing Strategy
 
-Unit tests are designed to verify the functionality of individual units of code, such as functions, classes, or modules, in isolation from the rest of the application. Key aspects of the unit testing strategy include:
+Unit tests are designed to verify the functionality of individual units of code, in isolation from the rest of the application.
 
-- **Jest Framework**: Jest is used for its simplicity and efficiency in testing JavaScript applications. It provides features such as test runners, assertions, and mocking utilities.
+- **Jest Framework**: Jest is used for its simplicity and efficiency in testing JavaScript applications.
   
 Unit testing helps identify bugs early in the development process, improves code quality, and facilitates easier maintenance and refactoring of code.
+
+### Redis
+
+redis used to cache projects depends on the current login user.
 
 ## Conclusion
 
