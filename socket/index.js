@@ -6,6 +6,7 @@ function connectSocketIO(app) {
     const io = socketIo(server, {
         cors: {
             origin: [
+                "http://localhost:4173",
                 "http://localhost:5173",
                 "https://teamwork-hub-client.vercel.app",
             ],
