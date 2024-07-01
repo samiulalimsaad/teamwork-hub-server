@@ -13,11 +13,11 @@ const {
 
 const userRouters = express.Router();
 
-userRouters.get("/user", authMiddleware, fetchUsers);
-userRouters.get("/user/:id", authMiddleware, fetchUserById);
+userRouters.get("/", authMiddleware, fetchUsers);
+userRouters.get("/:id", authMiddleware, fetchUserById);
 userRouters.post("/register", createUser);
-userRouters.put("/user/:id", authMiddleware, updateUser);
-userRouters.delete("/user/:id", authMiddleware, deleteUser);
+userRouters.put("/:id", authMiddleware, updateUser);
+userRouters.delete("/:id", authMiddleware, deleteUser);
 userRouters.post("/login", logInUser);
 userRouters.post("/logout", authMiddleware, logOutUser);
 
