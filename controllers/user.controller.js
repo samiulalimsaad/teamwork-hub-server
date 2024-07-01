@@ -100,7 +100,8 @@ const logInUser = async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         });
-        res.status(200).json({ success: true });
+        delete user.password;
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
