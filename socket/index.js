@@ -47,6 +47,11 @@ function connectSocketIO(app) {
             socket.broadcast.emit(`messageReceived-${data._id}`, data);
         });
 
+        socket.on("editorOption", (data) => {
+            console.info("...editorOption...", data);
+            socket.broadcast.emit(`editorOption-${data._id}`, data);
+        });
+
         socket.on("disconnect", () => {
             console.info("Client disconnected");
         });
